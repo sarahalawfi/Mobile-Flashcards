@@ -17,7 +17,7 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
   )
 }
 
-class HomeScreen extends React.Component {
+class Decks extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -27,7 +27,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-class SettingsScreen extends React.Component {
+class AddDeck extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -38,17 +38,17 @@ class SettingsScreen extends React.Component {
 }
 
 const TabNavigator = createBottomTabNavigator({
-  HomeScreen: {
-    screen: HomeScreen,
+  Decks: {
+    screen: Decks,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
     },
   },
-  SettingsScreen: {
-    screen: SettingsScreen,
+  AddDeck: {
+    screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'SettingsScreen',
+      tabBarLabel: 'Add Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     },
   },
