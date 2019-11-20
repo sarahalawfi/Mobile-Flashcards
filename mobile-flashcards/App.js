@@ -1,19 +1,90 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View ,Platform, StatusBar } from 'react-native';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { purple, white } from './utils/colors'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import Constants from 'expo-constants';
 
-export default function App() {
+function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Home!</Text>
+      </View>
+    );
+  }
+}
+
+class SettingsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Settings!</Text>
+      </View>
+    );
+  }
+}
+
+const TabNavigator = createBottomTabNavigator({
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+    },
   },
+  SettingsScreen: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      tabBarLabel: 'SettingsScreen',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+    },
+  },
+}, {
+  navigationOptions: {
+    header: null
+  },
+  tabBarOptions: {
+    activeTintColor: purple ,
+    style: {
+      height: 56,
+      backgroundColor:  white ,
+      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      shadowOffset: {
+        width: 0,
+        height: 3
+      },
+      shadowRadius: 6,
+      shadowOpacity: 1
+    }
+  }
 });
+
+
+
+const Tabs = createAppContainer(TabNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <View style={{ flex: 1 }}>
+          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+          <Tabs />
+        </View>
+        </Provider>
+    )
+  }
+}
