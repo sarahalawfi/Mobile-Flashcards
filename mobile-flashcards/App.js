@@ -5,9 +5,12 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants';
+import AddDeck from './components/AddNewDeck'
+import DeckView from './components/DeckView'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -17,29 +20,11 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
   )
 }
 
-class Decks extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
 
-class AddDeck extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
 
 const TabNavigator = createBottomTabNavigator({
-  Decks: {
-    screen: Decks,
+  DeckView: {
+    screen: DeckView,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
@@ -48,7 +33,7 @@ const TabNavigator = createBottomTabNavigator({
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'Add Deck',
+      tabBarLabel: 'New Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     },
   },
@@ -76,13 +61,22 @@ const TabNavigator = createBottomTabNavigator({
 
 const Tabs = createAppContainer(TabNavigator);
 
+
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+})
+const MainContainer = createAppContainer(MainNavigator)
+
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
           <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <Tabs />
+          <MainContainer/>
+          
         </View>
         </Provider>
     )
