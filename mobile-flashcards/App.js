@@ -12,6 +12,8 @@ import Constants from 'expo-constants';
 import AddDeck from './components/AddNewDeck'
 import DeckView from './components/DeckView'
 import DeckDetail from './components/DeckDetail'
+import AddCardToDeck from './components/AddCardToDeck'
+import Quiz from './components/Quiz'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -42,6 +44,7 @@ const TabNavigator = createBottomTabNavigator({
   navigationOptions: {
     header: null
   },
+ 
   tabBarOptions: {
     activeTintColor: purple ,
     style: {
@@ -66,16 +69,46 @@ const Tabs = createAppContainer(TabNavigator);
 const MainNavigator = createStackNavigator({
   Home: {
     screen: Tabs,
+    navigationOptions: {
+      title: "FlashCard ",
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
   },
   DeckDetail: {
     screen: DeckDetail,
     navigationOptions: {
+      title:"Deck Detail",
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  },
+  AddCardToDeck: {
+    screen: AddCardToDeck,
+    navigationOptions: {
+      title: "New Card",
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: "Quiz",
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,
       }
     }
   }
+
+
 })
 const MainContainer = createAppContainer(MainNavigator)
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Card, Button} from "react-native-elements";
+import { Button} from "react-native-elements";
 import { View, Text, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { AppStyles } from "../AppStyles";
