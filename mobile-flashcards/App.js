@@ -11,6 +11,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants';
 import AddDeck from './components/AddNewDeck'
 import DeckView from './components/DeckView'
+import DeckDetail from './components/DeckDetail'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -66,6 +67,15 @@ const MainNavigator = createStackNavigator({
   Home: {
     screen: Tabs,
   },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  }
 })
 const MainContainer = createAppContainer(MainNavigator)
 
