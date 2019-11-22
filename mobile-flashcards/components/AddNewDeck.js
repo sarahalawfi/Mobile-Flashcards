@@ -37,6 +37,7 @@ class AddDeck extends Component {
     submit = () => {
         const { title} = this.state
         const { dispatch} = this.props
+        const { navigation } = this.props;
         if (title === ''){
             alert("The title shouldn't be empty")
         }else{
@@ -50,14 +51,12 @@ class AddDeck extends Component {
             })
 
             //Go to new Deck page 
-            this.toHome()
+            navigation.navigate('DeckDetail', { title})
         }
         }
      
 
-    toHome = () => {
-        this.props.navigation.dispatch(NavigationActions.back({ key: 'AddDeck' }))
-    }
+   
     
     render() {
         return (
