@@ -22,7 +22,7 @@ class DeckDetail extends Component{
                     backgroundColor={purple}
                     title="ADD CARD"
                     buttonStyle={styles.buttonStyle}
-                    onPress={() => navigate('AddCardToDeck', { title })}/>
+                    onPress={() => navigate('AddCardToTheDeck', { title })}/>
                
                 <Button
                     backgroundColor={purple}

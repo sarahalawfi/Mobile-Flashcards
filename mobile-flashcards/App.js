@@ -12,7 +12,7 @@ import Constants from 'expo-constants';
 import AddDeck from './components/AddNewDeck'
 import DeckView from './components/DeckView'
 import DeckDetail from './components/DeckDetail'
-import AddCardToDeck from './components/AddCardToDeck'
+import AddCardToTheDeck from './components/AddCardToTheDeck'
 import Quiz from './components/Quiz'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -87,8 +87,8 @@ const MainNavigator = createStackNavigator({
       }
     }
   },
-  AddCardToDeck: {
-    screen: AddCardToDeck,
+  AddCardToTheDeck: {
+    screen: AddCardToTheDeck,
     navigationOptions: {
       title: "New Card",
       headerTintColor: white,

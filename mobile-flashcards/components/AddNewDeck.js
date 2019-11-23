@@ -4,7 +4,6 @@ import { purple, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 
 
 

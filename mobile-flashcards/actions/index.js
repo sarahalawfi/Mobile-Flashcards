@@ -19,11 +19,10 @@ export function addDeck (deck){
     }
 }
 
-export function addCardToDeck(deckId,card){
+export function addCard(card){
     return{
         type: ADD_CARD_TO_DECK,
         card,
-        deckId
     }
 }
 
