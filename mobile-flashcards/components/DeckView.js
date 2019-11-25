@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, ScrollView} from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, ScrollView,Animated} from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 import { getDecks } from '../utils/api'
@@ -7,7 +7,7 @@ import { receiveDecks } from '../actions'
 import { AppLoading } from 'expo'
 import {  ListItem } from "react-native-elements";
 
-
+//Animated
 
  class DeckView extends React.Component {
      state = {
