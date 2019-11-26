@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { purple, white,black, pink } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
@@ -60,11 +60,11 @@ class AddDeck extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text> What is the title of your new deck ? </Text>
+                <Text style={styles.Text}> What is the title of your new deck ? </Text>
                 <TextInput style={styles.input}
                     placeholder="Deck title"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
+                    placeholderTextColor='#f9c6cf'
+                autoCapitalize="none"
                     value={this.state.title}
                     onChangeText={text=> this.setState({ title:text})} />
 
@@ -82,8 +82,10 @@ const styles = StyleSheet.create({
     input: {
         margin: 15,
         height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1
+        borderColor: pink,
+        borderWidth: 1,
+        color:purple,
+        alignItems: 'center'
     },
     iosSubmitBtn: {
         backgroundColor: purple,
@@ -92,11 +94,19 @@ const styles = StyleSheet.create({
         height: 45,
         marginLeft: 40,
         marginRight: 40,
+        alignItems: 'center'
     },
     submitBtnText: {
         color: white,
         fontSize: 22,
         textAlign: 'center',
+        alignItems: 'center'
+    },
+    Text: {
+        color: black,
+        fontSize: 22,
+        textAlign: 'center',
+        alignItems: 'center'
     },
    
 })

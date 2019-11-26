@@ -41,8 +41,13 @@ import {  ListItem } from "react-native-elements";
                             { title, questions }  )}>
 
                         <ListItem key={title} 
-                        title={title} 
-                        subtitle={`${questions.length} Cards`}
+                         title={< View style={{ alignItems: 'center', fontSize: 20 }}>
+                                    <Text style={{ alignItems: 'center', fontSize: 20 }}>{title}</Text>
+                              </View>} 
+                        subtitle={
+                                < View style={{ alignItems: 'center', fontSize: 20 }}>
+                                <Text style={{ alignItems: 'center', fontSize: 20 }}>{`${questions.length} Cards`}</Text>
+                              </View>}
                         bottomDivider/>
 
                         </TouchableOpacity>

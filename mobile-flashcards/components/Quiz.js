@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { Card, Button, Divider } from "react-native-elements";
-import { purple, white ,black} from '../utils/colors'
+import { purple, white, black, red, gray} from '../utils/colors'
+import FlipCard from 'react-native-flip-card'
+import ResultPage from './ResultPage'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
+import * as Permissions from 'expo-permissions';
 
 
 
 function SubmitButton({ text, onPress }) {
     return (
         <TouchableOpacity
-            style={styles.iosSubmitBtn}
+            style={styles.iosSubmitBtn, { backgroundColor: (text === 'Correct' ? 'red' : 'gray'), marginTop: 30, }}
             onPress={onPress}>
             <Text style={styles.submitBtnText} >{text}</Text>
         </TouchableOpacity>
@@ -23,7 +27,6 @@ class Quiz extends Component {
         currentQuestion:0,
         correctAnswers: 0,
         flip: true,
-        done: 1,
         result: false,
         totalQuestions:undefined
     }
@@ -31,112 +34,154 @@ componentDidMount() {
     const { cards, deckLength } = this.props;
     this.setState({
         questions: cards,
-        totalQuestions: deckLength
+        totalQuestions: cards.length
 
-    });
+    }
+    );
+   
+}
+    RestartQuiz = () => {
+        const { questions}=this.state
+        this.setState(() => ({ questions: questions , currentQuestion: 0, correctAnswers: 0, flip: true, result: false, totalQuestions: undefined }))
+        this.ShowQues()
+    };
 
     ShowQues = () => {
-        const { questions, currentQuestion, totalQuestions} = this.state;
+        const { currentQuestion, totalQuestions } = this.state;
 
-        // if (done === totalQuestions){
-        //     this.setState({
-        //         result:true
-        //     })
-        // } else 
-        if (questions[currentQuestion] !== undefined){
-            return questions[currentQuestion].question;
+        if (currentQuestion < totalQuestions) {
+            this.setState(prevState => {
+                return {
+                    currentQuestion: prevState.currentQuestion + 1
+
+                }
+            })
         }
+
+            clearLocalNotification()
+                .then(setLocalNotification)
+    }
+
+    handleCorrect = () => {
+        const {  currentQuestion,totalQuestions } = this.state;
+        this.setState(prevState=>{
+            return{
+                correctAnswers: prevState.correctAnswers + 1}
+
+            }
+            );
         
+            this.ShowQues()
+        
+        console.log(this.state.currentQuestion)
 
     }
 
-    handleCorrect = ()=>{
-        const { done, currentQuestion } = this.state;
-
-            this.setState((prevState) => {
-                return {
-                    done: done + 1,
-                    currentQuestion: prevState.currentQuestion + 1,
-                    correctAnswers: prevState.correctAnswers + 1
-                };
-            });
-        
-}
 
     handleIncorrect = () => {
-        const { done } = this.state;
-
-            this.setState((prevState) => {
-                return {
-                    done: done + 1,
-                    currentQuestion: prevState.currentQuestion + 1,
-                };
-            });
-
-
+        this.ShowQues()
     }
+
+   
+
     
     //flip between q and a view 
     switchAnswer = () =>{
-        this.setState({ 
-            flip: !this.state.flip 
+        this.setState(prevState=>{ 
+            return {
+                flip: !prevState.flip }
         })
     }
-}
-    render() {
-        const { done, questions, result, currentQuestion, totalQuestions, flip } = this.state;
 
+    render() {
+        const { questions, result, currentQuestion, correctAnswers, totalQuestions, flip } = this.state;
+        const { title } = this.props.navigation.state.params;
+        const { navigate } = this.props.navigation;
+
+        const qustionNum = <View>
+            <Text style={{ alignItems: 'center', fontSize: 20 }}>{currentQuestion+1}/{totalQuestions} 
+            </Text>
+        </View>
         return (
             <ScrollView>
-                <View>
-                <Text>{done}/{totalQuestions}</Text>
-                </View>
-                {currentQuestion < questions.length ?
+                {currentQuestion < questions.length ? (
+                    <View>
+                      
                     <Card
-                        title={this.ShowQues}
-                        titleStyle={styles.title}
-                       >
+                     title={qustionNum}
+                        titleStyle={styles.title}>
+                        <FlipCard
+                            friction={12}
+                            perspective={2000}
+                            flipHorizontal={true}
+                            flipVertical={false}
+                            flip={flip}
+                            clickable={true}
+                            alignHeight={false}
+                            style={{
+                                borderRadius: 4,
+                                borderWidth: 0.5,
+                                borderColor: black,
+                                alignItems: "center",
+                                marginBottom: 15
+                            }}
+                            onPress={() => {
+                                console.log("");
+                            }}
+                        >
                             <View>
-                            <Text style={styles.CardStyle}>{questions[currentQuestion].question}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.CardStyle}>
+                                <Text style={styles.flipCard}>
                                     {questions[currentQuestion].answer}
                                 </Text>
                             </View>
-                    
-                        <Divider style={styles.divider} />
-                        <Button
-                            backgroundColor={purple}
-                            title="Show Answer"
-                            buttonStyle={styles.buttonStyle}
-                            onPress={this.switchAnswer}
-                        />
-                        <View >
-                            <SubmitButton text='Correct' onPress={this.handleCorrect} />
-                            <SubmitButton text='Incorrect' onPress={this.handleIncorrect} />
-                        </View>
-                    </Card>
-                     : <View style={styles.border}>
-                        <Text>Result</Text>
-                    </View>
 
-                }
-                </ScrollView>
+                            <View>
+                                    <Text style={styles.flipCard}>{questions[currentQuestion].question}</Text>
+                            </View>
+
+                        </FlipCard>
+                            <Text>
+                                Touch the question to see the answer
+                           </Text>
+                            <View style={styles.container}>
+                                <TouchableOpacity
+                                    style={styles.iosSubmitBtn, { backgroundColor:  'red', marginTop: 30, }}
+                                    onPress={this.handleCorrect}>
+                                    <Text style={styles.submitBtnText}>Correct</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.iosSubmitBtn, { backgroundColor: 'gray', marginTop: 30, }}
+                                    onPress={this.handleIncorrect}>
+                                    <Text style={styles.submitBtnText}>Incorrect</Text>
+                                </TouchableOpacity>
+                            </View>
+                    
+                    </Card>
+                    </View>
+                ) : (
+                        <ResultPage
+                            totalQuestions={totalQuestions}
+                            correct={correctAnswers}
+                            navigate={navigate}
+                            title={title}
+                            RestartQuiz={this.RestartQuiz} />
+                    )}
+            </ScrollView>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        paddingTop: 23
+    },
     buttonStyle: {
         marginBottom: 10
     },
     title: {
         fontSize: 20
-    },
-    divider: {
-        marginTop: 10,
-        marginBottom: 10
+        
     },
     CardStyle: {
         fontSize: 20,
@@ -154,10 +199,23 @@ const styles = StyleSheet.create({
     heading: {
         textAlign: 'center',
         color: black,
-    }
+    }, 
+    iosSubmitBtn: {
+        backgroundColor: purple,
+        padding: 10,
+        borderRadius: 7,
+        height: 45,
+        marginLeft: 40,
+        marginRight: 40,
+    },
+     submitBtnText: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center',
+    },
 });
 function mapStateToProps(state,  { navigation }) {
-    const { title } = navigation.state.params;
+    const { title,questions } = navigation.state.params;
     const cards = state[title].questions;
     const deckLength = cards.length;
 

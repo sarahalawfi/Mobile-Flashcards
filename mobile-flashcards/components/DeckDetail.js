@@ -4,6 +4,7 @@ import { Button} from "react-native-elements";
 import { View, Text, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { AppStyles } from "../AppStyles";
+import { black } from 'ansi-colors';
 
 
 
@@ -46,12 +47,13 @@ const styles = StyleSheet.create({
         marginBottom: 150
     },
     buttonStyle: {
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor:purple 
     },
     title: {
         fontSize: AppStyles.fontSize.title,
         fontWeight: "bold",
-        color: AppStyles.color.tint,
+        color: '#000000',
         marginTop: 20,
         textAlign: "center",
         marginBottom: 20,

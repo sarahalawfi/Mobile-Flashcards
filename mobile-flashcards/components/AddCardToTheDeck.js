@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { connect } from 'react-redux'
 import { addCardToDeck } from '../utils/api'
 import { addCard } from '../actions'
-import { purple, white } from '../utils/colors'
+import { purple, white ,pink} from '../utils/colors'
 
 
 
@@ -66,14 +66,14 @@ class AddCardToTheDeck extends Component{
 
                 <TextInput style={styles.input}
                     placeholder=" write a question "
-                    placeholderTextColor="#9a73ef"
+                    placeholderTextColor='#f9c6cf'
                     autoCapitalize="none"
                     value={this.state.question}
                     onChangeText={text => this.setState({ question: text })} />
 
                 <TextInput style={styles.input}
                     placeholder=" write answer "
-                    placeholderTextColor="#9a73ef"
+                    placeholderTextColor='#f9c6cf'
                     autoCapitalize="none"
                     value={this.state.answer}
                     onChangeText={text => this.setState({ answer: text })} />
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     input: {
         margin: 15,
         height: 40,
-        borderColor: '#7a42f4',
+        borderColor: pink,
         borderWidth: 1
     },
     iosSubmitBtn: {

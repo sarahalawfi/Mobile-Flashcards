@@ -6,9 +6,9 @@ import reducer from './reducers'
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
-import { purple, white } from './utils/colors'
+import { purple, white, pink } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import Constants from 'expo-constants';
+import * as Constants from 'expo-constants';
 import AddDeck from './components/AddNewDeck'
 import DeckView from './components/DeckView'
 import DeckDetail from './components/DeckDetail'
@@ -46,7 +46,7 @@ const TabNavigator = createBottomTabNavigator({
   },
  
   tabBarOptions: {
-    activeTintColor: purple ,
+    activeTintColor: pink ,
     style: {
       height: 56,
       backgroundColor:  white ,
@@ -73,7 +73,7 @@ const MainNavigator = createStackNavigator({
       title: "FlashCard ",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: pink,
       }
     }
   },
@@ -83,7 +83,7 @@ const MainNavigator = createStackNavigator({
       title:"Deck Detail",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: pink,
       }
     }
   },
@@ -93,7 +93,7 @@ const MainNavigator = createStackNavigator({
       title: "New Card",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: pink,
       }
     }
   },
@@ -103,7 +103,7 @@ const MainNavigator = createStackNavigator({
       title: "Quiz",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: pink,
       }
     }
   }
@@ -117,9 +117,8 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <MainContainer/>
-          
+         < UdaciStatusBar backgroundColor = { pink } barStyle = "light-content" />
+          <MainContainer/> 
         </View>
         </Provider>
     )
