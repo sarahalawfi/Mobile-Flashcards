@@ -43,10 +43,12 @@ componentDidMount() {
 
                 }
             })
-        }
-
+        }else{
             clearLocalNotification()
                 .then(setLocalNotification)
+        }
+
+           
     }
 
     RestartQuiz = () => {
