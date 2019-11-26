@@ -50,7 +50,8 @@ class ResultPage extends Component {
 }
 const styles = StyleSheet.create({
     button: {
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor: purple 
     }
 });
 

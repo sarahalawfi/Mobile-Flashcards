@@ -10,15 +10,7 @@ import * as Permissions from 'expo-permissions';
 
 
 
-function SubmitButton({ text, onPress }) {
-    return (
-        <TouchableOpacity
-            style={styles.iosSubmitBtn, { backgroundColor: (text === 'Correct' ? 'red' : 'gray'), marginTop: 30, }}
-            onPress={onPress}>
-            <Text style={styles.submitBtnText} >{text}</Text>
-        </TouchableOpacity>
-    )
-}
+
 
 
 class Quiz extends Component {
@@ -40,16 +32,11 @@ componentDidMount() {
     );
    
 }
-    RestartQuiz = () => {
-        const { questions}=this.state
-        this.setState(() => ({ questions: questions , currentQuestion: 0, correctAnswers: 0, flip: true, result: false, totalQuestions: undefined }))
-        this.ShowQues()
-    };
-
+  
     ShowQues = () => {
-        const { currentQuestion, totalQuestions } = this.state;
+        const { currentQuestion, totalQuestions,questions } = this.state;
 
-        if (currentQuestion < totalQuestions) {
+        if (currentQuestion < questions.length) {
             this.setState(prevState => {
                 return {
                     currentQuestion: prevState.currentQuestion + 1
@@ -61,6 +48,12 @@ componentDidMount() {
             clearLocalNotification()
                 .then(setLocalNotification)
     }
+
+    RestartQuiz = () => {
+        const { questions } = this.state
+        this.setState(() => ({ questions: questions, currentQuestion: 0, correctAnswers: 0, flip: true, result: false, totalQuestions: undefined }))
+        this.ShowQues()
+    };
 
     handleCorrect = () => {
         const {  currentQuestion,totalQuestions } = this.state;
@@ -83,8 +76,6 @@ componentDidMount() {
     }
 
    
-
-    
     //flip between q and a view 
     switchAnswer = () =>{
         this.setState(prevState=>{ 
@@ -99,7 +90,7 @@ componentDidMount() {
         const { navigate } = this.props.navigation;
 
         const qustionNum = <View>
-            <Text style={{ alignItems: 'center', fontSize: 20 }}>{currentQuestion+1}/{totalQuestions} 
+            <Text style={{ alignItems: 'center', fontSize: 20 }}>{currentQuestion + 1}/{questions.length} 
             </Text>
         </View>
         return (
@@ -161,7 +152,7 @@ componentDidMount() {
                     </View>
                 ) : (
                         <ResultPage
-                            totalQuestions={totalQuestions}
+                            totalQuestions={questions.length}
                             correct={correctAnswers}
                             navigate={navigate}
                             title={title}
